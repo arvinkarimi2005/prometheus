@@ -1,0 +1,11 @@
+groups:
+- name: ContainersDown
+  rules:
+  - alert: ContainerKilled
+    expr: time() - container_last_seen > 60
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Container killed (instance {{ $labels.instance }})"
+      description: "A container has disappeared\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
